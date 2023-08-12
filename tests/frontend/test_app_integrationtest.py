@@ -4,23 +4,35 @@ import unittest
 from applications.frontend.app import app
 
 
-class TestApp(unittest.TestCase):
+class TestIntegration(unittest.TestCase):
     """Integration tests for the frontend."""
 
     def setUp(self):
         """Set up the test client."""
         self.app = app.test_client()
+        self.app.testing = True
 
-    def test_submit_form_and_echo(self):
-        """Test submit form and echo."""
-        response = self.app.post(
-            '/echo_user_input',
-            data={'user_input': 'Integration test input'}
-        )
-        assert response.status_code == 200
+    def test_index_page(self):
+        """Test the index page."""
+        response = self.app.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'3-Day Weather Forecast App', response.data)
 
-        expected_output = "You entered: Integration test input"
-        assert expected_output.encode() in response.data
+    def test_get_3day_forecast_valid_city(self):
+        """Test the get_3day_forecast route with valid city."""
+        response = self.app.post('/get_3day_forecast',
+                                 data={'city': 'New York'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'3-Day Weather Forecast for New York',
+                      response.data)  # Add the state abbreviation
+        self.assertIn(b'Temperature:', response.data)
+        self.assertIn(b'Description:', response.data)
+
+    def test_get_3day_forecast_invalid_city(self):
+        """Test the get_3day_forecast route with invalid city."""
+        response = self.app.post('/get_3day_forecast', data={'city': ''})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'City not provided', response.data)
 
 
 if __name__ == '__main__':
