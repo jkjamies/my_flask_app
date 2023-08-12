@@ -1,11 +1,11 @@
-"""Test the app.py file using unit test."""
+"""Test the frontend.py file using unit test."""
 
 import unittest
-from app import app
+from applications.frontend.app import app
 
 
 class TestApp(unittest.TestCase):
-    """Test the app.py file using unit test."""
+    """Test the frontend.py file using unit test."""
 
     def setUp(self):
         """Set up the test client."""
