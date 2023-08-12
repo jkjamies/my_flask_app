@@ -1,5 +1,5 @@
 import unittest
-from app import app, echo_input
+from app import app
 
 
 class TestApp(unittest.TestCase):
