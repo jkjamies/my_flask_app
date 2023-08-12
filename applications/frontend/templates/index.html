@@ -8,30 +8,48 @@
 <body>
 <div class="container">
     <h1>3-Day Weather Forecast App</h1>
-    <form id="city-form" method="post" action="/get_3day_forecast">
-        <label for="city">Enter City:</label>
-        <input type="text" id="city" name="city" required>
-        <button type="submit">Get Forecast</button>
-    </form>
     <div id="forecast">
-        {% if forecast %}
-            <h2>3-Day Weather Forecast for {{ city }}</h2>
-            <div id="forecast-container">
-                {% for forecast_entry in forecast %}
-                    <div class="forecast-item">
-                        <img class="weather-icon-large"
-                             src="https://openweathermap.org/img/wn/{{ forecast_entry.icon }}.png"
-                             alt="{{ forecast_entry.description }}">
-                        <div class="weather-details">
-                            <strong>{{ forecast_entry.date }}</strong><br>
-                            Temperature: {{ forecast_entry.temperature }}°C<br>
-                            Description: {{ forecast_entry.description }}
-                        </div>
+        {% if weather_data %}
+            <div class="city-forecasts">
+                <div class="city-container">
+                    <h2>Boulder Forecast</h2>
+                    <div class="city-forecast">
+                        {% for entry in weather_data['Boulder'] %}
+                            <div class="forecast-item">
+                                <img class="weather-icon-large"
+                                     src="{{ entry.icon }}"
+                                     alt="{{ entry.description }}">
+                                <div class="weather-details">
+                                    <strong>{{ entry.date }}</strong><br>
+                                    Temperature: {{ entry.temperature }}°C<br>
+                                    Humidity: {{ entry.humidity }}%<br>
+                                    Description: {{ entry.description }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
+                <div class="city-container">
+                    <h2>Denver Forecast</h2>
+                    <div class="city-forecast">
+                        {% for entry in weather_data['Denver'] %}
+                            <div class="forecast-item">
+                                <img class="weather-icon-large"
+                                     src="{{ entry.icon }}"
+                                     alt="{{ entry.description }}">
+                                <div class="weather-details">
+                                    <strong>{{ entry.date }}</strong><br>
+                                    Temperature: {{ entry.temperature }}°C<br>
+                                    Humidity: {{ entry.humidity }}%<br>
+                                    Description: {{ entry.description }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        {% elif error %}
-            <p class="error">{{ error }}</p>
+        {% else %}
+            <p class="error">No weather data available.</p>
         {% endif %}
     </div>
 </div>
