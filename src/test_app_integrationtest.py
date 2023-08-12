@@ -7,7 +7,10 @@ class TestApp(unittest.TestCase):
     def test_submit_form_and_echo(self):
         client = app.test_client()
 
-        response = client.post('/echo_user_input', data={'user_input': 'Integration test input'})
+        response = client.post(
+            '/echo_user_input',
+            data={'user_input': 'Integration test input'}
+        )
         assert response.status_code == 200
 
         expected_output = "You entered: Integration test input"
