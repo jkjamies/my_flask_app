@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""A simple Flask app."""
+"""A simple Flask frontend."""
 
 from flask import Flask, request
 
