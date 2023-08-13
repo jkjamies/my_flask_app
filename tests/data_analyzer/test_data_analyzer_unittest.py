@@ -1,6 +1,7 @@
 """Unit tests for the data analyzer app."""
 
 import unittest
+
 from applications.data_analyzer.data_analyzer import DataAnalyzer
 
 

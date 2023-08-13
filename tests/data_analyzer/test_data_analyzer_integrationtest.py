@@ -14,7 +14,9 @@ class TestDataAnalyzerIntegrationTest(unittest.TestCase):
         mock_cursor = Mock()
         mock_cursor.fetchall.return_value = [
             ('Denver', 20, 80, 'Cloudy', '01d', '2023-08-11 12:00:00'),
-            ('Boulder', 25, 75, 'Sunny', '02d', '2023-08-11 12:00:00')
+            ('Denver', 22, 90, 'Cloudy', '01d', '2023-08-11 12:00:00'),
+            ('Boulder', 25, 75, 'Sunny', '02d', '2023-08-11 12:00:00'),
+            ('Boulder', 24, 76, 'Sunny', '02d', '2023-08-11 12:00:00')
         ]
         mock_connect.return_value.cursor.return_value = mock_cursor
 
@@ -24,8 +26,14 @@ class TestDataAnalyzerIntegrationTest(unittest.TestCase):
         self.assertEqual(len(weather_data), 2)
         self.assertIn('Denver', weather_data)
         self.assertIn('Boulder', weather_data)
-        self.assertEqual(len(weather_data['Denver']), 1)
-        self.assertEqual(len(weather_data['Boulder']), 1)
+        self.assertEqual(len(weather_data['Denver']['entries']), 2)
+        self.assertEqual(
+            weather_data['Denver']['average_temperature'], 21.0
+        )
+        self.assertEqual(len(weather_data['Boulder']['entries']), 2)
+        self.assertEqual(
+            weather_data['Boulder']['average_temperature'], 24.5
+        )
 
     @patch("psycopg2.connect")
     def test_get_weather_data_without_data(self, mock_connect):

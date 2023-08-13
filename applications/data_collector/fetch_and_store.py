@@ -15,7 +15,7 @@ def fetch_weather_data(city):
     """Fetch weather data from OpenWeatherMap API"""
     url = (f'http://api.openweathermap.org/data/2.5/forecast?q={city}'
            f'&appid={OPENWEATHER_API_KEY}'
-           f'&units=metric')
+           f'&units=imperial')
     response = requests.get(url, timeout=3)
     return response.json()
 

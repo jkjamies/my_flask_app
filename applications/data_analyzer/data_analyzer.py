@@ -59,6 +59,14 @@ class DataAnalyzer:
             weather_data[city].append(forecast_entry)
 
         cursor.close()
+
+        for city, entries in weather_data.items():
+            temperature_sum = sum(entry['temperature'] for entry in entries)
+            average_temperature = temperature_sum / len(entries)
+            weather_data[city] = {'entries': entries,
+                                  'average_temperature': round(
+                                      average_temperature, 2)}
+
         return weather_data
 
     def get_icon_url(self, icon_code):
