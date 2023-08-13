@@ -4,6 +4,11 @@
     <title>3-Day Weather Forecast App</title>
     <link rel="stylesheet" type="text/css"
           href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .average-temperature {
+            padding-left: 80px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -13,15 +18,16 @@
             <div class="city-forecasts">
                 <div class="city-container">
                     <h2>Boulder Forecast</h2>
+                    <p class="average-temperature"><strong>Average Temperature: {{ weather_data['Boulder'].average_temperature }}°F</strong></p>
                     <div class="city-forecast">
-                        {% for entry in weather_data['Boulder'] %}
+                        {% for entry in weather_data['Boulder'].entries %}
                             <div class="forecast-item">
                                 <img class="weather-icon-large"
                                      src="{{ entry.icon }}"
                                      alt="{{ entry.description }}">
                                 <div class="weather-details">
                                     <strong>{{ entry.date }}</strong><br>
-                                    Temperature: {{ entry.temperature }}°C<br>
+                                    Temperature: {{ entry.temperature }}°F<br>
                                     Humidity: {{ entry.humidity }}%<br>
                                     Description: {{ entry.description }}
                                 </div>
@@ -31,15 +37,16 @@
                 </div>
                 <div class="city-container">
                     <h2>Denver Forecast</h2>
+                    <p class="average-temperature"><strong>Average Temperature: {{ weather_data['Denver'].average_temperature }}°F</strong></p>
                     <div class="city-forecast">
-                        {% for entry in weather_data['Denver'] %}
+                        {% for entry in weather_data['Denver'].entries %}
                             <div class="forecast-item">
                                 <img class="weather-icon-large"
                                      src="{{ entry.icon }}"
                                      alt="{{ entry.description }}">
                                 <div class="weather-details">
                                     <strong>{{ entry.date }}</strong><br>
-                                    Temperature: {{ entry.temperature }}°C<br>
+                                    Temperature: {{ entry.temperature }}°F<br>
                                     Humidity: {{ entry.humidity }}%<br>
                                     Description: {{ entry.description }}
                                 </div>
