@@ -11,7 +11,7 @@ class TestApp(unittest.TestCase):
     def test_format_date(self):
         """Test that we can format a date"""
         dt_txt = '2023-08-11 12:00:00'
-        formatted_date = DataAnalyzer()._format_date(dt_txt)
+        formatted_date = DataAnalyzer().format_date(dt_txt)
         expected_date = 'Friday, August 11, 2023 12:00 PM'
         self.assertEqual(formatted_date, expected_date)
 
