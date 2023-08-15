@@ -24,6 +24,8 @@ class TestApp(unittest.TestCase):
         data = json.loads(response.data.decode('utf-8'))
         self.assertIn('requests_per_second', data)
         self.assertIsInstance(data['requests_per_second'], (int, float))
+        self.assertIn('prometheus_data', data)
+        self.assertIsInstance(data['prometheus_data'], str)
 
 
 if __name__ == '__main__':
