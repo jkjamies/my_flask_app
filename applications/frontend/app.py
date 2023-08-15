@@ -1,3 +1,5 @@
+"""The frontend application."""
+
 from flask import Flask, jsonify, render_template
 from prometheus_client import Counter, CollectorRegistry
 import time
