@@ -1,7 +1,7 @@
 """The frontend application."""
 
 from flask import Flask, jsonify, render_template
-from prometheus_client import Counter, CollectorRegistry, generate_latest
+from prometheus_client import Gauge, CollectorRegistry, generate_latest
 import time
 from ..data_analyzer.data_analyzer import DataAnalyzer
 
@@ -9,7 +9,7 @@ app = Flask(__name__)
 data_analyzer = DataAnalyzer()
 
 registry = CollectorRegistry()
-REQUEST_COUNT = Counter("http_requests_per_second",
+REQUEST_COUNT = Gauge("http_requests_per_second",
                         "Requests per second since app start",
                         ["method"], registry=registry)
 start_time = time.time()
