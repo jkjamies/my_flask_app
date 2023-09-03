@@ -1,6 +1,5 @@
 """Unit tests for the frontend app."""
 
-import json
 import unittest
 from applications.frontend.app import app
 
