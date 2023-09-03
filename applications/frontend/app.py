@@ -1,9 +1,8 @@
 """The frontend application."""
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template, Response
 from prometheus_client import Counter, CollectorRegistry, generate_latest
-import time
-from ..data_analyzer.data_analyzer import DataAnalyzer
+from applications.data_analyzer.data_analyzer import DataAnalyzer
 
 app = Flask(__name__)
 data_analyzer = DataAnalyzer()
@@ -12,7 +11,6 @@ registry = CollectorRegistry()
 REQUEST_COUNT = Counter("http_requests_per_second",
                         "Requests per second since app start",
                         ["method"], registry=registry)
-start_time = time.time()
 
 
 @app.route('/')
@@ -31,24 +29,8 @@ def health():
 @app.route('/metrics', methods=['GET'])
 def metrics():
     """Return the prometheus metrics"""
-    current_time = time.time()
-    time_difference = current_time - start_time
-
-    total_requests = REQUEST_COUNT.labels(method="GET")._value.get()
-
-    if time_difference > 0:
-        requests_per_second = total_requests / time_difference
-    else:
-        requests_per_second = 0
-
-    response_data = {
-        "requests_per_second": requests_per_second
-    }
-
     metrics_data = generate_latest(registry=registry)
-    response_data["prometheus_data"] = metrics_data.decode('utf-8')
-
-    return jsonify(response_data), 200
+    return Response(metrics_data, content_type="text/plain")
 
 
 @app.before_request
