@@ -22,11 +22,9 @@ class TestApp(unittest.TestCase):
         """Test the /metrics endpoint"""
         response = self.app.get('/metrics')
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.data.decode('utf-8'))
-        self.assertIn('requests_per_second', data)
-        self.assertIsInstance(data['requests_per_second'], (int, float))
-        self.assertIn('prometheus_data', data)
-        self.assertIsInstance(data['prometheus_data'], str)
+        self.assertEqual(response.content_type, 'text/plain')
+        data = response.data.decode('utf-8')
+        self.assertIn('http_requests_per_second_total', data)
 
 
 if __name__ == '__main__':
